@@ -41,8 +41,8 @@
     "mobx-react": "^5.2.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "semantic-ui-css": "^2.3.2",
-    "semantic-ui-react": "^0.81.2",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-react": "^0.81.3",
     "uuid": "^3.3.2"
   }
 }
