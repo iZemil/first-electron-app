@@ -15,7 +15,7 @@ class Root extends Component {
         // Refs:
         this.canvasRef = React.createRef();
         this.videoRef = React.createRef();
-        this.imageRef = React.createRef();
+        // this.imageRef = React.createRef();
     }
 
     showSources = () => {
@@ -56,7 +56,6 @@ class Root extends Component {
     handleStream = (stream) => {
         this.stream = stream;
         const video = this.videoRef.current;
-        console.log(11, video)
 
         video.srcObject = stream;
         video.onloadedmetadata = (e) => video.play();
@@ -64,7 +63,7 @@ class Root extends Component {
 
     takeImg = () => {
         const canvas = this.canvasRef.current;
-        const photo = this.imageRef.current;
+        // const photo = this.imageRef.current;
         const video = this.videoRef.current;
 
         const width = 1280;
@@ -76,15 +75,15 @@ class Root extends Component {
         context.drawImage(video, 0, 0, width, height);
         
         const data = canvas.toDataURL('image/png');
-
-        photo.setAttribute('src', data);
+        this.setState({ imgDownloadHref: data });
+        // photo.setAttribute('src', data);
     }
 
-    setPosition(e) {
-        this.setState({
-            posX: e.clientX,
-            posY: e.clientY
-        });
+    downoadImg = () => {
+        const canvas = this.canvasRef.current;
+        const data = canvas.toDataURL('image/png');
+
+        this.setState({ imgDownloadHref: data });
     }
 
     handleMouseMove = (e) => {
@@ -92,10 +91,9 @@ class Root extends Component {
         if (e.buttons !== 1) return;
         
         const ctx = this.canvasRef.current.getContext('2d');
-        const {
-            posX,
-            posY,
-        } = this.state;
+        const {top, left} = this.canvasRef.current.getBoundingClientRect();
+        const posX = e.clientX - left;
+        const posY = e.clientY - top;
 
         ctx.beginPath(); //path begin
         ctx.lineWidth = 5;
@@ -103,8 +101,6 @@ class Root extends Component {
         ctx.strokeStyle = "white";
 
         ctx.moveTo(posX, posY);
-        
-        this.setPosition(e);
 
         ctx.lineTo(posX, posY);
 
@@ -112,6 +108,10 @@ class Root extends Component {
     }
 
     render() {
+        const {
+            imgDownloadHref
+        } = this.state;
+
         return(
             <div className="Root">
                 <div className="settings-panel">
@@ -125,6 +125,14 @@ class Root extends Component {
                     >
                         Take picture
                     </Button>
+                    <a
+                        className="ui button"
+                        download="sreenshot"
+                        href={imgDownloadHref}
+                        onClick={this.downoadImg}
+                    >
+                        Download
+                    </a>
                 </div>
 
                 <Divider />
@@ -144,12 +152,12 @@ class Root extends Component {
                     />
                 </div>
 
-                <Divider />
+                {/* <Divider />
 
                 <div className="output">
                     <h3>Image: </h3>
                     <img id="photo" ref={this.imageRef} />
-                </div>
+                </div> */}
             </div>
         )
     }
