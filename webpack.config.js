@@ -6,6 +6,8 @@ const ExtractTextPlugin   = require('extract-text-webpack-plugin');
 
 
 module.exports = {
+    target: 'electron-main',
+
     entry: './src/index.jsx',
 
     output: {
