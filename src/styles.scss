@@ -1,14 +1,71 @@
-
+$white: #e0e1e2 !important;
 
 body {
-  padding: 20px;
+  overflow-x: auto;
+  padding: 10px;
   background-color: #f6d365 !important;
+  background-color: #36393f !important;
   // background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   cursor: default;
+
+  button {
+    cursor: pointer;
+  }
 }
 
 video,
 canvas {
-  background: azure;
+  background: black;
 }
-  
+
+.streaming {
+  display: none;
+}
+
+.paint-instruments {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.color-picker {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+
+  &__button {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    outline: 0;
+    border: 1px solid #949494;
+    border-radius: 4px;
+  }
+
+  .sketch-picker {
+    position: absolute;
+  }
+}
+
+.line-range {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+
+  &__slider {
+
+  }
+
+  &__number {
+    margin-left: 5px;
+  }
+}
+
+.b {
+  margin-bottom: 20px;
+}
+
+// Semantic
+.ui.active.button {
+  background-color: #127fec;
+}
