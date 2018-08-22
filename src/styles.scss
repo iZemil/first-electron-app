@@ -2,8 +2,7 @@ $white: #e0e1e2 !important;
 
 body {
   overflow-x: auto;
-  padding: 10px;
-  background-color: #f6d365 !important;
+  padding: 10px 10px 20px !important;
   background-color: #36393f !important;
   // background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   cursor: default;
@@ -18,6 +17,16 @@ canvas {
   background: black;
 }
 
+.boot-panel {
+  display: flex;
+  align-items: center;
+  height: 34px;
+
+  .paint-instruments {
+    margin-left: 10px;
+  }
+}
+
 .streaming {
   display: none;
 }
@@ -25,7 +34,6 @@ canvas {
 .paint-instruments {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .color-picker {
@@ -62,7 +70,7 @@ canvas {
 }
 
 .b {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 // Semantic
