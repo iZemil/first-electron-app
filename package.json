@@ -40,6 +40,7 @@
     "classnames": "^2.2.6",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-color": "^2.14.1",
     "react-dom": "^16.4.1",

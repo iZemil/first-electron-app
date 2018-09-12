@@ -12,7 +12,7 @@ render(
     <Provider {...stores}>
         <Fragment>
             <Root />
-            <DevTools />
+            {/* <DevTools /> */}
         </Fragment>
     </Provider>,
     document.getElementById('root'),

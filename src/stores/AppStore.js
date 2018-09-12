@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx';
+import {observable, action, computed} from 'mobx';
 import electron, {desktopCapturer} from 'electron';
 
 class AppStore {
@@ -29,6 +29,7 @@ class AppStore {
     initRefs(that) {
         this.videoRef = that.videoRef;
         this.canvasRef = that.canvasRef;
+        this.ctx = that.canvasRef.current.getContext('2d');
     }
 
     @action
@@ -95,15 +96,11 @@ class AppStore {
 
     @action
     takeImg = () => {
-        const canvas = this.canvasRef.current;
         const video = this.videoRef.current;
         
-        const context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, this.width, this.height);
-        
-        const data = canvas.toDataURL('image/png');
+        this.ctx.drawImage(video, 0, 0, this.width, this.height);
 
-        this.imgDownloadHref = data;
+        this.imgDownloadHref = this.canvasRef.current.toDataURL('image/png');
     }
 
     @action.bound
@@ -116,29 +113,61 @@ class AppStore {
 
     @action.bound
     handleMouseMove(e) {
+        if (e.buttons !== 1) return;
+        
+        this.doPencil(e);
+    }
+
+    @action.bound
+    handleMouseDown(e) {
+        console.log('handleMouseDown');
+    }
+
+    @action.bound
+    handleMouseUp(e) {
+        console.log('handleMouseUp');
+    }
+
+    @action.bound
+    handleMouseOut(e) {
+        console.log('handleMouseOut');
+    }
+
+    getCurPos(e) {
+        const { top, left } = this.canvasRef.current.getBoundingClientRect();
+
+        return [
+            e.clientX - left,
+            e.clientY - top
+        ];
+    }
+
+    doPencil(e) {
         const {
             color,
-            lineWidth
+            lineWidth,
+            ctx
         } = this;
 
-        if (e.buttons !== 1) return;
-        // console.log(electron.screen.getCursorScreenPoint());
-        
-        const ctx = this.canvasRef.current.getContext('2d');
-        const {top, left} = this.canvasRef.current.getBoundingClientRect();
-        const posX = e.clientX - left;
-        const posY = e.clientY - top;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round'; // "butt" || "round" || "square"
 
         ctx.beginPath();
         ctx.lineWidth = lineWidth;
-        ctx.lineCap = 'round';
         ctx.strokeStyle = color;
 
-        ctx.moveTo(posX, posY);
-
-        ctx.lineTo(posX, posY);
+        ctx.moveTo(...this.getCurPos(e));
+        ctx.lineTo(...this.getCurPos(e));
 
         ctx.stroke();
+    }
+
+    doRect(e) {
+
+    }
+
+    doLine(e) {
+
     }
 
     @action.bound

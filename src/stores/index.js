@@ -1,8 +1,9 @@
 import AppStore from './AppStore';
 
-const rootStore = {
-    appStore: new AppStore(),
+class RootStore {
+    constructor() {
+        this.appStore = new AppStore(this);
+    }
+}
 
-};
-
-export default rootStore;
+export default new RootStore();

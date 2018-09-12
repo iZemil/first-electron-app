@@ -1,7 +1,7 @@
 $white: #e0e1e2 !important;
 
 body {
-  overflow-x: auto;
+  overflow-x: auto !important;
   padding: 10px 10px 20px !important;
   background-color: #36393f !important;
   // background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
@@ -14,10 +14,10 @@ body {
 
 video,
 canvas {
-  background: black;
+  border: 2px dotted #d4d4d4;
 }
 
-.boot-panel {
+.tool-panel {
   display: flex;
   align-items: center;
   height: 34px;

@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {observer, inject} from 'mobx-react';
 
 import { SketchPicker } from 'react-color';
-import { Button } from 'semantic-ui-react';
+import { Button, Dropdown } from 'semantic-ui-react';
 
 @inject('appStore')
 @observer
-class CanvasInstruments extends Component {
+class ToolPanel extends Component {
     constructor(props) {
         super(props);
 
@@ -20,11 +20,53 @@ class CanvasInstruments extends Component {
             lineWidth,
             changeLineWidth,
             toggleColorPicker,
-            changeColor
+            changeColor,
+
+            imgDownloadHref,
+            screens,
+            activeScreen,
+            changeActiveScreen,
+            downoadImg
         } = this.appStore;
 
         return (
-            <div className="paint-instruments">
+            <div className="b tool-panel">
+                <Button.Group size='small'>
+                    <Dropdown
+                            text={activeScreen.text || 'Window'}
+                            icon='desktop'
+                            button
+                            className='icon'
+                            labeled                          
+                        >
+                        <Dropdown.Menu>
+                            {screens.map(it => {
+                                const { id, text } = it;
+                                
+                                return (
+                                    <Dropdown.Item 
+                                        key={id} 
+                                        id={id}
+                                        name={text}
+                                        onClick={changeActiveScreen}
+                                    >
+                                        {text}
+                                    </Dropdown.Item>);
+                                })
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Button icon='mouse pointer' />
+                    <Button icon='linkify' />
+                    <Button
+                        icon='download'
+                        download="sreenshot"
+                        as={'a'}
+                        href={imgDownloadHref}
+                        onClick={downoadImg}
+                    />
+                </Button.Group>
+                <div className="paint-instruments">
                     <Button.Group size='small'>
                         <Button icon="pencil alternate" />
                         <Button icon="expand" />
@@ -64,8 +106,9 @@ class CanvasInstruments extends Component {
                         />
                     </div>
                 </div>
-        )
+            </div>
+        );
     }
 }
 
-export default CanvasInstruments;
+export default ToolPanel;
